@@ -37,17 +37,5 @@ return [
             'instance' => Dotenv\Exception\ValidationException::class,
             'status_code' => \Illuminate\Http\Response::HTTP_UNPROCESSABLE_ENTITY,
         ],
-        'error401' => [
-            'instance' => Cashrewards\MultiTenant\Exceptions\Error401::class,
-            'status_code' => \Illuminate\Http\Response::HTTP_UNAUTHORIZED,
-        ],
-        'error403' => [
-            'instance' => Cashrewards\MultiTenant\Exceptions\Error403::class,
-            'status_code' => \Illuminate\Http\Response::HTTP_FORBIDDEN,
-        ],
-        'error500' => [
-            'instance' => Cashrewards\MultiTenant\Exceptions\Error500::class,
-            'status_code' => \Illuminate\Http\Response::HTTP_INTERNAL_SERVER_ERROR,
-        ],
     ]
 ];

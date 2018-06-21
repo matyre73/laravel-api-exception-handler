@@ -1,6 +1,6 @@
 <?php
 
-namespace matyre73\LaravelApiExceptionHandler\Exceptions;
+namespace Cashrewards\LaravelApiExceptionHandling\Exceptions;
 
 use App;
 use Exception;
@@ -46,16 +46,7 @@ class ApiExceptionHandler extends ExceptionHandler
     public function __construct(Container $container)
     {
         parent::__construct($container);
-    }
-
-    /**
-     * @param array $config
-     * @return $this
-     */
-    public function setExceptionConfigs(array $config)
-    {
-        $this->config = $config;
-        return $this;
+        $this->config = config('exceptions');
     }
 
     /**
@@ -82,7 +73,9 @@ class ApiExceptionHandler extends ExceptionHandler
     }
 
     /**
-     * @param $exception
+     * Set the response array.
+     *
+     * @param \Exception|FlattenException $exception An \Exception or FlattenException instance
      * @param array $headers
      * @return $this
      */
@@ -92,14 +85,31 @@ class ApiExceptionHandler extends ExceptionHandler
             $this->exception = FlattenException::create($exception, $this->statusCode, $headers);
         }
 
-        $replacesments = [
+        $replacements = [
+            ':message' => 'error',
+            ':errors' => $this->getContent(),
             ':code' => $this->exception->getStatusCode(),
-            ':status' => 'error',
-            ':errors' => $this->getContent()
+            ':status_code' => $this->exception->getStatusCode(),
+            ':debug' => config('app.debug'),
         ];
 
-        $this->responseArray = array_merge($replacesments, $this->config['errorFormat']);
+        $this->responseArray = $this->replaceArray($replacements);
         return $this;
+    }
+
+    /**
+     * Replace the error format template.
+     *
+     * @param array $replacements
+     * @return array mixed
+     */
+    public function replaceArray($replacements)
+    {
+        $responseArray = $this->config['errorFormat'];
+        foreach ($this->config['errorFormat'] as $key => $value) {
+            $responseArray[$key] = $replacements[$value];
+        }
+        return $responseArray;
     }
 
     /**
