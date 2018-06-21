@@ -2,8 +2,9 @@
 
 namespace matyre73\LaravelApiExceptionHandler;
 
+use Illuminate\Contracts\Container\Container;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
-use matyre\LaravelApiExceptionHandler\Exceptions\Handler as ExceptionHandler;
+use matyre73\LaravelApiExceptionHandler\Exceptions\ApiExceptionHandler;
 
 class ServiceProvider extends BaseServiceProvider
 {
@@ -48,7 +49,8 @@ class ServiceProvider extends BaseServiceProvider
     protected function registerExceptionHandler()
     {
         $this->app->singleton('api.exception', function ($app) {
-            return new ExceptionHandler($app['Illuminate\Contracts\Debug\ExceptionHandler'], $this->config('errorFormat'), $this->config('debug'));
+            return (new ApiExceptionHandler($app['Illuminate\Contracts\Container\Container']))
+                ->setExceptionConfigs(config('exceptions'));
         });
     }
 }
