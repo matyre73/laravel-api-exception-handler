@@ -1,0 +1,43 @@
+{
+    "name": "matyre73/laravel-api-exception-handler",
+    "description": "Composer package for laravel api exception handling",
+    "keywords": ["laravel", "php", "exception", "api"],
+    "homepage": "https://github.com/matyre73/laravel-api-exception-handler",
+    "type": "laravel, php, exception",
+    "require": {
+        "php" : ">=7.1.0",
+        "laravel/framework": "~5.4.0|~5.6.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "6.2|^7.0",
+        "orchestra/testbench": "^3.5.0"
+    },
+    "license": "Apache 2.0",
+    "authors": [
+        {
+            "name": "Wade Dunbar",
+            "email": "matyre73@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-4": {
+            "matyre73\\LaravelApiExceptionHandler\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "matyre73\\LaravelApiExceptionHandler\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "phpunit": "vendor/phpunit/phpunit/phpunit"
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "matyre73\\LaravelApiExceptionHandler\\ServiceProvider"
+            ]
+        }
+    }
+}
